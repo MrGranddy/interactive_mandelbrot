@@ -24,7 +24,7 @@ PyGame, NumPy, Matplotlib Module
 Firstly you should compile the C code to do the calculating, to do this you should have a C compiler,
 me and probably most of you uses GCC so we run this simple line of command:
 ```
->>> gcc mandelbrot.c -o mandelbrot
+>>> gcc -shared -fpic -o mandelbrot.so mandelbrot.c
 ```
 This command compiles the C code and creates an executable called "mandelbrot", the name must stay this way to
 let the python script run the executable. After compiling you can run the program by simply calling the "interactive_mandelbrot.py"
