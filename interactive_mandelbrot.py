@@ -50,7 +50,7 @@ lib.mandelbrot.restype = ctypes.POINTER(ctypes.c_double * arrlen)
 
 while True:
 
-    if calculating:
+    if calculating or True:
         cresult = lib.mandelbrot(
             cwidth,
             cheight,
@@ -78,6 +78,10 @@ while True:
         calculating = False
 
     for event in pygame.event.get():
+
+        keys_pressed = pygame.key.get_pressed()
+        step_ratio = 1 / 100
+
         if event.type == pygame.MOUSEBUTTONUP:
             pos = pygame.mouse.get_pos()
             center = (
@@ -170,8 +174,8 @@ while True:
             )
             """
             calculating = True
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_a:
-            center = (center[0] - mandel_range / 10, center[1])
+        if keys_pressed[pygame.K_a]:
+            center = (center[0] - mandel_range * step_ratio, center[1])
             """
             print(
                 "Max iterations: " + str(max_iter),
@@ -184,8 +188,8 @@ while True:
             )
             """
             calculating = True
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_s:
-            center = (center[0], center[1] - mandel_range / 10)
+        if keys_pressed[pygame.K_s]:
+            center = (center[0], center[1] - mandel_range * step_ratio)
             """
             print(
                 "Max iterations: " + str(max_iter),
@@ -198,8 +202,8 @@ while True:
             )
             """
             calculating = True
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_d:
-            center = (center[0] + mandel_range / 10, center[1])
+        if keys_pressed[pygame.K_d]:
+            center = (center[0] + mandel_range * step_ratio, center[1])
             """
             print(
                 "Max iterations: " + str(max_iter),
@@ -212,8 +216,8 @@ while True:
             )
             """
             calculating = True
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_w:
-            center = (center[0], center[1] + mandel_range / 10)
+        if keys_pressed[pygame.K_w]:
+            center = (center[0], center[1] + mandel_range * step_ratio)
             """
             print(
                 "Max iterations: " + str(max_iter),
