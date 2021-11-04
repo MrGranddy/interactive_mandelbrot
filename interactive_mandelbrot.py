@@ -90,33 +90,11 @@ while True:
             )
             mandel_range *= 0.1
             max_iter = 50 + np.log10(2 / mandel_range) ** 2
-            """
-            print(
-                "Max iterations: " + str(max_iter),
-                "Mandel Range: " + str(mandel_range),
-                "Coordinates: (",
-                center[0],
-                ",",
-                center[1],
-                ")",
-            )
-            """
             calculating = True
         if event.type == pygame.KEYDOWN and event.key == pygame.K_BACKSPACE:
             mandel_range = 2
             center = (0, 0)
             max_iter = 50 + np.log10(2 / mandel_range) ** 3
-            """
-            print(
-                "Max iterations: " + str(max_iter),
-                "Mandel Range: " + str(mandel_range),
-                "Coordinates: (",
-                center[0],
-                ",",
-                center[1],
-                ")",
-            )
-            """
             calculating = True
         if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
             files = [f for f in listdir(".") if isfile(join(".", f))]
@@ -133,102 +111,25 @@ while True:
             print("Screenshot saved...")
         if event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
             max_iter = 50 + np.log10(2 / mandel_range) ** 3
-            """
-            print(
-                "Max iterations: " + str(max_iter),
-                "Mandel Range: " + str(mandel_range),
-                "Coordinates: (",
-                center[0],
-                ",",
-                center[1],
-                ")",
-            )
-            """
             calculating = True
         if event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
             if max_iter > 20:
                 max_iter -= 20
-            """
-            print(
-                "Max iterations: " + str(max_iter),
-                "Mandel Range: " + str(mandel_range),
-                "Coordinates: (",
-                center[0],
-                ",",
-                center[1],
-                ")",
-            )
-            """
             calculating = True
         if event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
             max_iter += 20
-            """
-            print(
-                "Max iterations: " + str(max_iter),
-                "Mandel Range: " + str(mandel_range),
-                "Coordinates: (",
-                center[0],
-                ",",
-                center[1],
-                ")",
-            )
-            """
             calculating = True
-        if keys_pressed[pygame.K_a]:
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_a:
             center = (center[0] - mandel_range * step_ratio, center[1])
-            """
-            print(
-                "Max iterations: " + str(max_iter),
-                "Mandel Range: " + str(mandel_range),
-                "Coordinates: (",
-                center[0],
-                ",",
-                center[1],
-                ")",
-            )
-            """
             calculating = True
-        if keys_pressed[pygame.K_s]:
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_s:
             center = (center[0], center[1] - mandel_range * step_ratio)
-            """
-            print(
-                "Max iterations: " + str(max_iter),
-                "Mandel Range: " + str(mandel_range),
-                "Coordinates: (",
-                center[0],
-                ",",
-                center[1],
-                ")",
-            )
-            """
             calculating = True
-        if keys_pressed[pygame.K_d]:
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_d:
             center = (center[0] + mandel_range * step_ratio, center[1])
-            """
-            print(
-                "Max iterations: " + str(max_iter),
-                "Mandel Range: " + str(mandel_range),
-                "Coordinates: (",
-                center[0],
-                ",",
-                center[1],
-                ")",
-            )
-            """
             calculating = True
-        if keys_pressed[pygame.K_w]:
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_w:
             center = (center[0], center[1] + mandel_range * step_ratio)
-            """
-            print(
-                "Max iterations: " + str(max_iter),
-                "Mandel Range: " + str(mandel_range),
-                "Coordinates: (",
-                center[0],
-                ",",
-                center[1],
-                ")",
-            )
-            """
             calculating = True
         if event.type == pygame.QUIT:
             sys.exit()
