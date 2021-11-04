@@ -14,11 +14,12 @@ import pygame
 from pygame.locals import DOUBLEBUF
 import numpy as np
 import matplotlib
+
 matplotlib.use("Agg")
 
-# C compilation
-# > gcc -shared -fpic -o mandelbrot.so mandelbrot.c
-lib = cdll.LoadLibrary('./mandelbrot.so')
+# C compilation
+# > gcc -shared -fpic -o mandelbrot.so mandelbrot.c
+lib = cdll.LoadLibrary("./mandelbrot.so")
 
 
 pygame.init()
@@ -45,21 +46,25 @@ mandel = None
 arrlen = width * height
 cwidth = c_uint(int(width))
 cheight = c_uint(int(height))
-cmaxiter = c_uint(int(max_iter))
 lib.mandelbrot.restype = ctypes.POINTER(ctypes.c_double * arrlen)
 
-while(True):
+while True:
 
     if calculating:
-        cresult = lib.mandelbrot(cwidth, cheight, c_longdouble(center[0] - mandel_range),
-                                 c_longdouble(
-                                     center[0] + mandel_range), c_longdouble(center[1] - mandel_range),
-                                 c_longdouble(center[1] + mandel_range), cmaxiter, c_longdouble(div_range))
+        cresult = lib.mandelbrot(
+            cwidth,
+            cheight,
+            c_longdouble(center[0] - mandel_range),
+            c_longdouble(center[0] + mandel_range),
+            c_longdouble(center[1] - mandel_range),
+            c_longdouble(center[1] + mandel_range),
+            c_uint(int(max_iter)),
+            c_longdouble(div_range),
+        )
 
-        mandel = np.array(cresult.contents, dtype="uint8").reshape(
-            (width, height))
+        mandel = np.array(cresult.contents, dtype="uint8").reshape((width, height))
 
-        fig = plt.figure(figsize=(height/dpi, width/dpi), dpi=dpi)
+        fig = plt.figure(figsize=(height / dpi, width / dpi), dpi=dpi)
         fig.figimage(mandel, cmap=colormap)
         canvas = agg.FigureCanvasAgg(fig)
         canvas.draw()
@@ -75,19 +80,39 @@ while(True):
     for event in pygame.event.get():
         if event.type == pygame.MOUSEBUTTONUP:
             pos = pygame.mouse.get_pos()
-            center = (center[0] - mandel_range + (pos[0] / width) * 2 * mandel_range,
-                      center[1] - mandel_range + (1 - pos[1] / height) * 2 * mandel_range)
+            center = (
+                center[0] - mandel_range + (pos[0] / width) * 2 * mandel_range,
+                center[1] - mandel_range + (1 - pos[1] / height) * 2 * mandel_range,
+            )
             mandel_range *= 0.1
             max_iter = 50 + np.log10(2 / mandel_range) ** 2
-            print("Max iterations: " + str(max_iter), "Mandel Range: " +
-                  str(mandel_range), "Coordinates: (", center[0], ",", center[1], ")")
+            """
+            print(
+                "Max iterations: " + str(max_iter),
+                "Mandel Range: " + str(mandel_range),
+                "Coordinates: (",
+                center[0],
+                ",",
+                center[1],
+                ")",
+            )
+            """
             calculating = True
         if event.type == pygame.KEYDOWN and event.key == pygame.K_BACKSPACE:
             mandel_range = 2
             center = (0, 0)
             max_iter = 50 + np.log10(2 / mandel_range) ** 3
-            print("Max iterations: " + str(max_iter), "Mandel Range: " +
-                  str(mandel_range), "Coordinates: (", center[0], ",", center[1], ")")
+            """
+            print(
+                "Max iterations: " + str(max_iter),
+                "Mandel Range: " + str(mandel_range),
+                "Coordinates: (",
+                center[0],
+                ",",
+                center[1],
+                ")",
+            )
+            """
             calculating = True
         if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
             files = [f for f in listdir(".") if isfile(join(".", f))]
@@ -96,43 +121,110 @@ while(True):
                 if "interactive_mandelbrot_ss" in f:
                     if int(f[25:-4]) > max_ss_num:
                         max_ss_num = int(f[25:-4])
-            plt.imsave("interactive_mandelbrot_ss%d.png" %
-                       (max_ss_num + 1), mandel, cmap=colormap)
+            plt.imsave(
+                "interactive_mandelbrot_ss%d.png" % (max_ss_num + 1),
+                mandel,
+                cmap=colormap,
+            )
             print("Screenshot saved...")
         if event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
             max_iter = 50 + np.log10(2 / mandel_range) ** 3
-            print("Max iterations: " + str(max_iter), "Mandel Range: " +
-                  str(mandel_range), "Coordinates: (", center[0], ",", center[1], ")")
+            """
+            print(
+                "Max iterations: " + str(max_iter),
+                "Mandel Range: " + str(mandel_range),
+                "Coordinates: (",
+                center[0],
+                ",",
+                center[1],
+                ")",
+            )
+            """
             calculating = True
         if event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
-            max_iter -= 20
-            print("Max iterations: " + str(max_iter), "Mandel Range: " +
-                  str(mandel_range), "Coordinates: (", center[0], ",", center[1], ")")
+            if max_iter > 20:
+                max_iter -= 20
+            """
+            print(
+                "Max iterations: " + str(max_iter),
+                "Mandel Range: " + str(mandel_range),
+                "Coordinates: (",
+                center[0],
+                ",",
+                center[1],
+                ")",
+            )
+            """
             calculating = True
         if event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
             max_iter += 20
-            print("Max iterations: " + str(max_iter), "Mandel Range: " +
-                  str(mandel_range), "Coordinates: (", center[0], ",", center[1], ")")
+            """
+            print(
+                "Max iterations: " + str(max_iter),
+                "Mandel Range: " + str(mandel_range),
+                "Coordinates: (",
+                center[0],
+                ",",
+                center[1],
+                ")",
+            )
+            """
             calculating = True
         if event.type == pygame.KEYDOWN and event.key == pygame.K_a:
             center = (center[0] - mandel_range / 10, center[1])
-            print("Max iterations: " + str(max_iter), "Mandel Range: " +
-                  str(mandel_range), "Coordinates: (", center[0], ",", center[1], ")")
+            """
+            print(
+                "Max iterations: " + str(max_iter),
+                "Mandel Range: " + str(mandel_range),
+                "Coordinates: (",
+                center[0],
+                ",",
+                center[1],
+                ")",
+            )
+            """
             calculating = True
         if event.type == pygame.KEYDOWN and event.key == pygame.K_s:
             center = (center[0], center[1] - mandel_range / 10)
-            print("Max iterations: " + str(max_iter), "Mandel Range: " +
-                  str(mandel_range), "Coordinates: (", center[0], ",", center[1], ")")
+            """
+            print(
+                "Max iterations: " + str(max_iter),
+                "Mandel Range: " + str(mandel_range),
+                "Coordinates: (",
+                center[0],
+                ",",
+                center[1],
+                ")",
+            )
+            """
             calculating = True
         if event.type == pygame.KEYDOWN and event.key == pygame.K_d:
             center = (center[0] + mandel_range / 10, center[1])
-            print("Max iterations: " + str(max_iter), "Mandel Range: " +
-                  str(mandel_range), "Coordinates: (", center[0], ",", center[1], ")")
+            """
+            print(
+                "Max iterations: " + str(max_iter),
+                "Mandel Range: " + str(mandel_range),
+                "Coordinates: (",
+                center[0],
+                ",",
+                center[1],
+                ")",
+            )
+            """
             calculating = True
         if event.type == pygame.KEYDOWN and event.key == pygame.K_w:
             center = (center[0], center[1] + mandel_range / 10)
-            print("Max iterations: " + str(max_iter), "Mandel Range: " +
-                  str(mandel_range), "Coordinates: (", center[0], ",", center[1], ")")
+            """
+            print(
+                "Max iterations: " + str(max_iter),
+                "Mandel Range: " + str(mandel_range),
+                "Coordinates: (",
+                center[0],
+                ",",
+                center[1],
+                ")",
+            )
+            """
             calculating = True
         if event.type == pygame.QUIT:
             sys.exit()
