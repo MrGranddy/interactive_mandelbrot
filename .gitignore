@@ -1,2 +1,3 @@
 *.so
 *.png
+.DS_Store

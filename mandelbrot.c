@@ -3,25 +3,27 @@
 #include <math.h>
 #include <complex.h>
 
-int manderIter(long double cx, long double cy, int maxIter, long double divRange) {
+unsigned int manderIter(long double cx, long double cy, unsigned int maxIter, long double divRange) {
     
     double complex c = cx + cy * I;
     double complex z = 0;
 
-    int iter = maxIter;
-    while (iter-- && cabs(z) <= divRange) {
+    unsigned int iter = maxIter;
+    while (iter && cabs(z) <= divRange) {
         z = cpow(z, 2) + c;
+        iter--;
     }
-    return maxIter - iter - 1;
+    
+    return maxIter - iter;
 }
 
-double* mandelbrot(unsigned int height, unsigned int width, long double xmin, long double xmax, 
+unsigned int* mandelbrot(unsigned int height, unsigned int width, long double xmin, long double xmax, 
                     long double ymin, long double ymax, unsigned int maxIter, 
                     long double divRange) {
 
     long double x_unit = (xmax - xmin) / width;
     long double y_unit = (ymax - ymin) / height;
-    double *values = (double *)malloc(width * height * sizeof(double));
+    unsigned int *values = (unsigned int *)malloc(width * height * sizeof(unsigned int));
 
     unsigned int m = 0;
 

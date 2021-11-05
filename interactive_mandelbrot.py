@@ -1,21 +1,21 @@
-import os
 import sys
 
 # C calling utilities
-from ctypes import cdll, c_longdouble, c_uint
+from ctypes import cdll, c_longdouble, c_uint, c_uint32
 import ctypes
 
-import subprocess
 from os.path import isfile, join
 from os import listdir
-import matplotlib.backends.backend_agg as agg
-from matplotlib import pyplot as plt
+
 import pygame
 from pygame.locals import DOUBLEBUF
-import numpy as np
-import matplotlib
 
+from matplotlib import pyplot as plt
+import matplotlib.backends.backend_agg as agg
+import matplotlib
 matplotlib.use("Agg")
+
+import numpy as np
 
 # C compilation
 # > gcc -shared -fpic -o mandelbrot.so mandelbrot.c
@@ -30,12 +30,11 @@ window = pygame.display.set_mode(size, DOUBLEBUF)
 screen = pygame.display.get_surface()
 
 cmaps = ["hot", "copper", "cubehelix", "CMRmap", "BuPu", "YlOrBr", "inferno"]
-colormap = cmaps[4]
+cmap_sel_ind = 4
 
 center = (0, 0)
 mandel_range = 2
-div_range = 4
-dpi = 80
+div_range = 2
 max_iter = 50 + np.log10(2 / mandel_range) ** 3
 
 pygame.display.flip()
@@ -46,11 +45,11 @@ mandel = None
 arrlen = width * height
 cwidth = c_uint(int(width))
 cheight = c_uint(int(height))
-lib.mandelbrot.restype = ctypes.POINTER(ctypes.c_double * arrlen)
+lib.mandelbrot.restype = ctypes.POINTER(c_uint32 * arrlen)
 
 while True:
 
-    if calculating or True:
+    if calculating:
         cresult = lib.mandelbrot(
             cwidth,
             cheight,
@@ -58,23 +57,16 @@ while True:
             c_longdouble(center[0] + mandel_range),
             c_longdouble(center[1] - mandel_range),
             c_longdouble(center[1] + mandel_range),
-            c_uint(int(max_iter)),
+            c_uint32(int(max_iter)),
             c_longdouble(div_range),
         )
 
-        mandel = np.array(cresult.contents, dtype="uint8").reshape((width, height))
-
-        fig = plt.figure(figsize=(height / dpi, width / dpi), dpi=dpi)
-        fig.figimage(mandel, cmap=colormap)
-        canvas = agg.FigureCanvasAgg(fig)
-        canvas.draw()
-        renderer = canvas.get_renderer()
-        raw_data = renderer.tostring_rgb()
-        s = canvas.get_width_height()
-        man = pygame.image.fromstring(raw_data, s, "RGB")
+        mandel = np.array(cresult.contents).reshape((width, height))
+        cmap = matplotlib.cm.get_cmap(cmaps[cmap_sel_ind], lut=max_iter)
+        canvas = (cmap(mandel)[..., :3] * 255).astype("uint8")
+        man = pygame.image.frombuffer(canvas.tobytes(), size, "RGB")
         screen.blit(man, (0, 0))
         pygame.display.flip()
-        plt.close("all")
         calculating = False
 
     for event in pygame.event.get():
@@ -109,27 +101,35 @@ while True:
                 cmap=colormap,
             )
             print("Screenshot saved...")
+
         if event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
             max_iter = 50 + np.log10(2 / mandel_range) ** 3
             calculating = True
+
         if event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
             if max_iter > 20:
                 max_iter -= 20
             calculating = True
+
         if event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
             max_iter += 20
             calculating = True
+
         if event.type == pygame.KEYDOWN and event.key == pygame.K_a:
             center = (center[0] - mandel_range * step_ratio, center[1])
             calculating = True
+
         if event.type == pygame.KEYDOWN and event.key == pygame.K_s:
             center = (center[0], center[1] - mandel_range * step_ratio)
             calculating = True
+
         if event.type == pygame.KEYDOWN and event.key == pygame.K_d:
             center = (center[0] + mandel_range * step_ratio, center[1])
             calculating = True
+
         if event.type == pygame.KEYDOWN and event.key == pygame.K_w:
             center = (center[0], center[1] + mandel_range * step_ratio)
             calculating = True
+
         if event.type == pygame.QUIT:
             sys.exit()
