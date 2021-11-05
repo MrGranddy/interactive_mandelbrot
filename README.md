@@ -11,14 +11,9 @@ I added some new features to travel around the awesome fractal space of the Mand
 * Cleaning up the code a little bit and removing redundant code.
 * Changed the main logic of the recursion function of Mandelbrot:
 
-In the older versions the creation of the fractal was straight forward, the code was just iterating z = z^2 + c formula.
-Now the complex number operations are done using the "complex.h" standart library, this means we can try different
-terms with different powers and coefficients, for example: z = z ** 3.2 + c, and indeed you can now do exactly that!
-How it works is simple, now the recursion formula is in the form of z = a * z ^ p1 + b * z ^ p2 + c * z ^ p3 + c
-This means you can change the coefficients and powers of these three terms and see the effects on runtime!
-Instructions on how to change there parameters are given in the "How To" section. Initially:
-[a, b, c] = [0.0, 1.0, 0.0], [p1, p2, p3] = [1.0, 2.0, 3.0]
-So initially you will see our classic Mandelbrot fractal.
+> In the older versions the creation of the fractal was straight forward, the code was just iterating z = z^2 + c formula. \ Now the complex number operations are done using the "complex.h" standart library, \ this means we can try different terms with different powers and coefficients, \ for example: z = z ** 3.2 + c, and indeed you can now do exactly that! \ How it works is simple, now the recursion formula is in the form of 
+```z = a * z ^ p1 + b * z ^ p2 + c * z ^ p3 + c```
+> This means you can change the coefficients and powers of these three terms and see the effects on runtime! \ Instructions on how to change there parameters are given in the "How To" section. \ Initially: [a, b, c] = [0.0, 1.0, 0.0], [p1, p2, p3] = [1.0, 2.0, 3.0] \ So initially you will see our classic Mandelbrot fractal.
 
 
 ## Getting Started
