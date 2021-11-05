@@ -15,7 +15,9 @@ I added some new features to travel around the awesome fractal space of the Mand
 
 ```z = a * z ^ p1 + b * z ^ p2 + c * z ^ p3 + c```
 
-> This means you can change the coefficients and powers of these three terms and see the effects on runtime!   Instructions on how to change there parameters are given in the "How To" section.   Initially: [a, b, c] = [0.0, 1.0, 0.0], [p1, p2, p3] = [1.0, 2.0, 3.0]   So initially you will see our classic Mandelbrot fractal.
+> This means you can change the coefficients and powers of these three terms and see the effects on runtime!   Instructions on how to change there parameters are given in the "How To" section.
+
+> Initially: [a, b, c] = [0.0, 1.0, 0.0], [p1, p2, p3] = [1.0, 2.0, 3.0] so initially you will see our classic Mandelbrot fractal.
 
 
 ## Getting Started
