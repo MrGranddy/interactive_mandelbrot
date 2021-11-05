@@ -13,6 +13,7 @@ from pygame.locals import DOUBLEBUF
 from matplotlib import pyplot as plt
 import matplotlib.backends.backend_agg as agg
 import matplotlib
+
 matplotlib.use("Agg")
 
 import numpy as np
@@ -41,7 +42,14 @@ max_iter = 50 + np.log10(2 / mandel_range) ** 3
 coeffs = [0.0, 1.0, 0.0]
 powers = [1.0, 2.0, 3.0]
 sel_adjust_ind = 0, 0
-key_map = { pygame.K_1: 0, pygame.K_2: 1, pygame.K_3: 2, pygame.K_4: 3, pygame.K_5: 4, pygame.K_6: 5 }
+key_map = {
+    pygame.K_1: 0,
+    pygame.K_2: 1,
+    pygame.K_3: 2,
+    pygame.K_4: 3,
+    pygame.K_5: 4,
+    pygame.K_6: 5,
+}
 
 pygame.display.flip()
 calculating = True
@@ -67,7 +75,7 @@ while True:
             c_longdouble(div_range),
             (ctypes.c_longdouble * len(coeffs))(*coeffs),
             (ctypes.c_longdouble * len(powers))(*powers),
-            c_size_t(len(coeffs))
+            c_size_t(len(coeffs)),
         )
 
         mandel = np.array(cresult.contents).reshape((width, height))
@@ -106,7 +114,9 @@ while True:
                 if "interactive_mandelbrot_ss" in f:
                     if int(f[25:-4]) > max_ss_num:
                         max_ss_num = int(f[25:-4])
-            Image.fromarray(canvas).save("interactive_mandelbrot_ss%d.png" % (max_ss_num + 1))
+            Image.fromarray(canvas).save(
+                "interactive_mandelbrot_ss%d.png" % (max_ss_num + 1)
+            )
             print("Screenshot saved...")
 
         if event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
@@ -149,7 +159,9 @@ while True:
                     powers[j] += 0.1
 
             elif event.key in key_map:
-                sel_adjust_ind = key_map[event.key] // len(coeffs), key_map[event.key] % len(coeffs)
+                sel_adjust_ind = key_map[event.key] // len(coeffs), key_map[
+                    event.key
+                ] % len(coeffs)
 
             calculating = True
 
