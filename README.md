@@ -10,7 +10,7 @@ with python.
 I added some new features to travel around the awesome fractal space of the Mandelbrot Set. Some major changes are:
 * Cleaning up the code a little bit and removing redundant code.
 * Changed the main logic of the recursion function of Mandelbrot:
-```
+
 In the older versions the creation of the fractal was straight forward, the code was just iterating z = z^2 + c formula.
 Now the complex number operations are done using the "complex.h" standart library, this means we can try different
 terms with different powers and coefficients, for example: z = z ** 3.2 + c, and indeed you can now do exactly that!
@@ -19,7 +19,6 @@ This means you can change the coefficients and powers of these three terms and s
 Instructions on how to change there parameters are given in the "How To" section. Initially:
 [a, b, c] = [0.0, 1.0, 0.0], [p1, p2, p3] = [1.0, 2.0, 3.0]
 So initially you will see our classic Mandelbrot fractal.
-```
 
 
 ## Getting Started
@@ -52,48 +51,49 @@ script, the command may vary on different systems, for me it is simply:
 
 ## How to use the program?
 
+
 * Zooming In
-```
+
 To zoom in the fractal you click on the point you want to zoom in. After clicking the screen will show one tenth of the previous
 screen and the new center will be the point you click on.
-```
+
 
 * Reseting to Initial State
-```
+
 If you press BACKSPACE the screen will return to its initial state.
-```
+
 
 * Moving on Fractal
-```
+
 Using WASD keys you can move along the canvas, the center move to the direction and the frame will be recalculated.
-```
+
 
 * Changing the Max Iteration
-```
+
 Pressing LEFT ARROW will decrease and pressing RIGHT ARROW will increase the max iteration.
-```
+
 
 * Reseting Max Iteration
-```
+
 Pressing DOWN ARROW will reset the max iteration.
-```
+
 
 * Taking a Screen Shot
-```
+
 Pressing ENTER key will save a screen shot of the current frame.
-```
+
 
 * Selecting Coefficients to Adjust
-```
+
 Pressing 1, 2, or 3 key will select a coefficient to adjust. i.e. [a, b, c]
-```
+
 
 * Selecting Powers to Adjust
-```
+
 Pressing 4, 5, or 6 key will select a power to adjust. i.e. [p1, p2, p3]
-```
+
 
 * Changing Selected Parameters
-```
+
 Pressing O key will decrease the selected parameter by 0.1 and, pressing P key will increase the selected value by 0.1.
-```
+
