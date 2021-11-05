@@ -54,46 +54,45 @@ script, the command may vary on different systems, for me it is simply:
 
 * Zooming In
 
-To zoom in the fractal you click on the point you want to zoom in. After clicking the screen will show one tenth of the previous
-screen and the new center will be the point you click on.
+> To zoom in the fractal you click on the point you want to zoom in. After clicking the screen will show one tenth of the previous screen and the new center will be the point you click on.
 
 
 * Reseting to Initial State
 
-If you press BACKSPACE the screen will return to its initial state.
+> If you press BACKSPACE the screen will return to its initial state.
 
 
 * Moving on Fractal
 
-Using WASD keys you can move along the canvas, the center move to the direction and the frame will be recalculated.
+> Using WASD keys you can move along the canvas, the center move to the direction and the frame will be recalculated.
 
 
 * Changing the Max Iteration
 
-Pressing LEFT ARROW will decrease and pressing RIGHT ARROW will increase the max iteration.
+> Pressing LEFT ARROW will decrease and pressing RIGHT ARROW will increase the max iteration.
 
 
 * Reseting Max Iteration
 
-Pressing DOWN ARROW will reset the max iteration.
+> Pressing DOWN ARROW will reset the max iteration.
 
 
 * Taking a Screen Shot
 
-Pressing ENTER key will save a screen shot of the current frame.
+> Pressing ENTER key will save a screen shot of the current frame.
 
 
 * Selecting Coefficients to Adjust
 
-Pressing 1, 2, or 3 key will select a coefficient to adjust. i.e. [a, b, c]
+> Pressing 1, 2, or 3 key will select a coefficient to adjust. i.e. [a, b, c]
 
 
 * Selecting Powers to Adjust
 
-Pressing 4, 5, or 6 key will select a power to adjust. i.e. [p1, p2, p3]
+> Pressing 4, 5, or 6 key will select a power to adjust. i.e. [p1, p2, p3]
 
 
 * Changing Selected Parameters
 
-Pressing O key will decrease the selected parameter by 0.1 and, pressing P key will increase the selected value by 0.1.
+> Pressing O key will decrease the selected parameter by 0.1 and, pressing P key will increase the selected value by 0.1.
 
